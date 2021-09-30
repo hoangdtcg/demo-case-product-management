@@ -1,0 +1,17 @@
+Quản lý sản phẩm
+- Sản phẩm
+    - Tên
+    - Giá tiền
+    - Ảnh sản phẩm
+    - Mô tả
+- Quản lý (Kho)
+    - Danh sách sản phẩm
+    + Sắp xếp sản phẩm
+    + Quản lý số lượng
+    + Thêm sản phẩm
+    + Xoá sản phẩm
+    + Chỉnh sửa thông tin sản phẩm
+
+Hứng trứng
+- Trứng
+- Giỏ

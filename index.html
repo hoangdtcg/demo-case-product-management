@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <script src="Product.js"></script>
+    <script src="ProductManagement.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="data.js"></script>
+</head>
+
+<body>
+<form id="new-product">
+    <fieldset>
+        <legend>ADD NEW PRODUCT</legend>
+        <input type="text" id="name-product" placeholder="Input Name Product">
+        <input type="number" id="price-product" placeholder="Input Price Product">
+        <button type="button" onclick="addProduct()">ADD</button>
+    </fieldset>
+</form>
+
+<form id="update-product" style="display: none">
+    <fieldset>
+        <legend>UPDATE PRODUCT</legend>
+        <input type="text" id="name-update" placeholder="Input Name Product">
+        <input type="number" id="price-update" placeholder="Input Price Product">
+        <input type="text" id="image-update" placeholder="Input Image Product">
+        <input type="text" id="desc-update" placeholder="Input Description Product">
+        <button type="button" onclick="updateProduct()">UPDATE</button>
+        <button type="button" onclick="hideForm('update-product')">CANCEL</button>
+    </fieldset>
+</form>
+<div id="product-list">
+
+</div>
+<script>
+
+    let productManagement = new ProductManagement();
+    productManagement.products = loadData();
+    console.log(productManagement.products);
+    productManagement.display("product-list");
+    let currentSelect = -1;
+
+    function deleteProduct(index) {
+        productManagement.removeProduct(index);
+        productManagement.display("product-list");
+        saveData(productManagement.products);
+    }
+
+    function addProduct() {
+        let name = document.getElementById('name-product').value;
+        let price = document.getElementById('price-product').value;
+        let product = new Product(name,price);
+
+        productManagement.addProduct(product);
+        productManagement.display("product-list");
+        resetForm('new-product');
+        saveData(productManagement.products);
+    }
+
+    function updateProduct() {
+        let name = document.getElementById('name-update').value;
+        let price = document.getElementById('price-update').value;
+        let image = document.getElementById('image-update').value;
+        let description = document.getElementById('desc-update').value;
+        let newProduct = new Product(name,price);
+        newProduct.image = image;
+        newProduct.description = description;
+
+        productManagement.updateProduct(currentSelect,newProduct);
+        productManagement.display("product-list");
+        resetForm('update-product');
+        saveData(productManagement.products);
+
+    }
+    
+    function editProduct(index) {
+        currentSelect = index;
+        showForm('update-product');
+        document.getElementById('name-update').value = productManagement.products[index].name;
+        document.getElementById('price-update').value = productManagement.products[index].price;
+        document.getElementById('image-update').value = productManagement.products[index].image;
+        document.getElementById('desc-update').value = productManagement.products[index].description;
+    }
+
+    function hideForm(id) {
+        document.getElementById(id).style.display = "none";
+    }
+    function showForm(id) {
+        document.getElementById(id).style.display = "block";
+    }
+
+    function resetForm(id) {
+        document.getElementById(id).reset();
+    }
+
+
+
+</script>
+</body>
+</html>
